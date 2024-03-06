@@ -1,3 +1,4 @@
+import React from "react";
 import { Loader, Error, ArtistCard } from "../components";
 import { useGetTopChartsQuery } from "../redux/services/shazamCore";
 
