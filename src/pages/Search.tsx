@@ -10,11 +10,14 @@ const Search = () => {
   const { activeSong, isPlaying } = useSelector((state) => state.player);
   const { data, isFetching, error } = useGetSongsBySearchQuery(searchTerm);
 
-  const songs = data?.tracks?.hits?.map((song) => song.track);
+  const songs = data?.tracks?.hits?.map((song) => {
+    console.log(song);
+    return song.track;
+  });
 
-  if (isFetching) return <Loader text="Loading top charts" />;
+  if (isFetching) return <Loader title="Loading top charts" />;
 
-  if (error) return <Error />;
+  if (error) return <Error message="Something went wrong" />;
 
   return (
     <div className="flex flex-col">

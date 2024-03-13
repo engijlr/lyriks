@@ -18,7 +18,6 @@ const Discover = () => {
   );
 
   if (isFetching) return <Loader title="Loading songs..." />;
-  console.log(error);
 
   if (error) return <Error message={error.message} />;
 

@@ -1,7 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const DetailsHeader = ({ artistId, artistData, songData }) => {
+interface DetailsHeaderProps {
+  artistId?: string;
+  artistData?: any;
+  songData?: any;
+}
+
+const DetailsHeader: React.FC<DetailsHeaderProps> = ({
+  artistId,
+  artistData,
+  songData,
+}) => {
   const artist = artistData?.attributes;
 
   return (

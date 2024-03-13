@@ -1,8 +1,18 @@
 import React from "react";
 
 import SongBar from "./SongBar";
+import { Song } from "../redux/features/playerSlice";
 
-const RelatedSongs = ({
+interface RelatedSongsProps {
+  data: any;
+  isPlaying: boolean;
+  activeSong: Song;
+  handlePauseClick?: any;
+  handlePlayClick?: any;
+  artistId?: string;
+}
+
+const RelatedSongs: React.FC<RelatedSongsProps> = ({
   data,
   isPlaying,
   activeSong,
@@ -14,7 +24,7 @@ const RelatedSongs = ({
     <h1 className="font-bold text-3xl text-white">Related Songs:</h1>
 
     <div>
-      {data?.map((song, i) => (
+      {data?.map((song: Song, i: number) => (
         <SongBar
           key={`${artistId}-${song.key}-${i}`}
           song={song}

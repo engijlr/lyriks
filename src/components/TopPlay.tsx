@@ -1,17 +1,26 @@
-import React, { useEffect, useRef } from "react";
+import React, { FC, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper";
 
 import PlayPause from "./PlayPause";
-import { playPause, setActiveSong } from "../redux/features/playerSlice";
+import { Song, playPause, setActiveSong } from "../redux/features/playerSlice";
 import { useGetTopChartsQuery } from "../redux/services/shazamCore";
 
 import "swiper/css";
 import "swiper/css/free-mode";
 
-const TopChartCard = ({
+interface TopChartCardPros {
+  song: Song;
+  i: number;
+  isPlaying: boolean;
+  activeSong: Song;
+  handlePause: () => void;
+  handlePlay: () => void;
+}
+
+const TopChartCard: FC<TopChartCardPros> = ({
   song,
   i,
   isPlaying,
@@ -63,7 +72,7 @@ const TopPlay = () => {
   const handlePauseClick = () => {
     dispatch(playPause(false));
   };
-  const handlePlayClick = (song, i) => {
+  const handlePlayClick = (song: Song, i: number) => {
     dispatch(setActiveSong({ song, data, i }));
     dispatch(playPause(true));
   };
@@ -82,7 +91,7 @@ const TopPlay = () => {
         </div>
 
         <div className="mt-4 flex flex-col gap-1">
-          {topPlays?.map((song, i) => (
+          {topPlays?.map((song: Song, i: number) => (
             <TopChartCard
               key={song.key}
               song={song}
@@ -113,7 +122,7 @@ const TopPlay = () => {
           modules={[FreeMode]}
           className="mt-4"
         >
-          {topPlays?.map((song, i) => (
+          {topPlays?.map((song: Song, i: number) => (
             <SwiperSlide
               key={song?.key}
               style={{ width: "25%", height: "auto" }}

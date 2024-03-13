@@ -1,4 +1,37 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
+
+export interface Artist {
+  alias: string;
+  id: string;
+  adamid: string;
+}
+
+export interface SongImages {
+  background: string;
+  coverart: string;
+  coverarthq: string;
+  joecolor: string;
+}
+
+export interface Song {
+  artists: Artist[];
+  images: SongImages;
+  key: string;
+  layout: string;
+  subtitle: string;
+  title: string;
+  type: string;
+  url: string;
+}
+
+export interface PlayerState {
+  currentSongs: Song[];
+  currentIndex: number;
+  isActive: boolean;
+  isPlaying: boolean;
+  activeSong: Song | null; // Assuming activeSong can be null if no song is active
+  genreListId: string;
+}
 
 const initialState = {
   currentSongs: [],
@@ -6,11 +39,11 @@ const initialState = {
   isActive: false,
   isPlaying: false,
   activeSong: {},
-  genreListId: '',
+  genreListId: "",
 };
 
 const playerSlice = createSlice({
-  name: 'player',
+  name: "player",
   initialState,
   reducers: {
     setActiveSong: (state, action) => {
@@ -60,6 +93,12 @@ const playerSlice = createSlice({
   },
 });
 
-export const { setActiveSong, nextSong, prevSong, playPause, selectGenreListId } = playerSlice.actions;
+export const {
+  setActiveSong,
+  nextSong,
+  prevSong,
+  playPause,
+  selectGenreListId,
+} = playerSlice.actions;
 
 export default playerSlice.reducer;

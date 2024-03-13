@@ -16,7 +16,7 @@ const ArtistDetails = () => {
 
   if (isFetchingArtistDetails) return <Loader title="Loading artist details" />;
 
-  if (error) return <Error />;
+  if (error) return <Error message="Something went wrong" />;
 
   return (
     <div className="flex flex-col">
