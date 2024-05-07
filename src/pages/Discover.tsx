@@ -12,10 +12,13 @@ const Discover = () => {
   const { activeSong, isPlaying, genreListId } = useSelector(
     (state) => state.player
   );
+  const { country } = useSelector((state) => state.location);
+  console.log(country);
 
-  const { data, isFetching, error } = useGetSongsByGenreQuery(
-    genreListId || "POP"
-  );
+  const { data, isFetching, error } = useGetSongsByGenreQuery({
+    genre: genreListId || "POP",
+    country: country || "NO",
+  });
 
   if (isFetching) return <Loader title="Loading songs..." />;
 

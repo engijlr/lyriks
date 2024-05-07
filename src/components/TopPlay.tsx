@@ -58,16 +58,18 @@ const TopChartCard: FC<TopChartCardPros> = ({
 };
 
 const TopPlay = () => {
+  const { country } = useSelector((state) => state.location);
   const dispatch = useDispatch();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
-  const { data } = useGetTopChartsQuery();
+  const { data } = useGetTopChartsQuery(country || "NO");
   const divRef = useRef(null);
 
   useEffect(() => {
     divRef.current.scrollIntoView({ behavior: "smooth" });
   });
-
+  console.log(data);
   const topPlays = data?.slice(0, 5);
+  console.log(topPlays);
 
   const handlePauseClick = () => {
     dispatch(playPause(false));
@@ -91,7 +93,7 @@ const TopPlay = () => {
         </div>
 
         <div className="mt-4 flex flex-col gap-1">
-          {topPlays?.map((song: Song, i: number) => (
+          {/* {topPlays?.map((song: Song, i: number) => (
             <TopChartCard
               key={song.key}
               song={song}
@@ -101,7 +103,7 @@ const TopPlay = () => {
               handlePause={handlePauseClick}
               handlePlay={() => handlePlayClick(song, i)}
             />
-          ))}
+          ))} */}
         </div>
       </div>
 
@@ -124,13 +126,14 @@ const TopPlay = () => {
         >
           {topPlays?.map((song: Song, i: number) => (
             <SwiperSlide
-              key={song?.key}
+              //@ts-expect-error
+              key={song?.id}
               style={{ width: "25%", height: "auto" }}
               className="shadow-lg rounded-full animate-sliderright"
             >
-              <Link to={`/artists/${song?.artists[0].adamid}`}>
+              <Link to={`/artists/${song?.attributes?.artistName}`}>
                 <img
-                  src={song?.images.background}
+                  src={song?.artwork?.url}
                   alt="name"
                   className="rounded-full w-full object-cover"
                 />
