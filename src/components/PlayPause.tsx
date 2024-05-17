@@ -17,7 +17,7 @@ const PlayPause: FC<PlayPauseProps> = ({
   handlePause,
   handlePlay,
 }) =>
-  isPlaying && activeSong?.title === song.title ? (
+  isPlaying && activeSong?.title === song?.attributes.name ? (
     <FaPauseCircle size={35} className="text-gray-300" onClick={handlePause} />
   ) : (
     <FaPlayCircle size={35} className="text-gray-300" onClick={handlePlay} />

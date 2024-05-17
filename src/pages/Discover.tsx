@@ -13,7 +13,6 @@ const Discover = () => {
     (state) => state.player
   );
   const { country } = useSelector((state) => state.location);
-  console.log(country);
 
   const { data, isFetching, error } = useGetSongsByGenreQuery({
     genre: genreListId || "POP",
@@ -48,7 +47,7 @@ const Discover = () => {
       <div className="flex flex-wrap sm:justify-start justify-center gap-8">
         {data?.map((song, i) => (
           <SongCard
-            key={song.key}
+            key={song.id}
             song={song}
             isPlaying={isPlaying}
             activeSong={activeSong}

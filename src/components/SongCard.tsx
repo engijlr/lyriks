@@ -21,7 +21,6 @@ const SongCard: FC<SongCardProps> = ({
   data,
 }) => {
   const dispatch = useDispatch();
-  console.log(song);
 
   const handlePauseClick = () => {
     dispatch(playPause(false));
@@ -36,7 +35,7 @@ const SongCard: FC<SongCardProps> = ({
       <div className="relative w-full h-56 group">
         <div
           className={`absolute inset-0 justify-center items-center bg-black bg-opacity-50 group-hover:flex ${
-            activeSong?.title === song.title
+            activeSong?.title === song.attributes.title
               ? "flex bg-black bg-opacity-70"
               : "hidden"
           }`}
@@ -49,22 +48,22 @@ const SongCard: FC<SongCardProps> = ({
             handlePlay={handlePlayClick}
           />
         </div>
-        <img alt="song_img" src={song.images?.coverart} />
+        <img alt="song_img" src={song.attributes.artwork.url} />
       </div>
 
       <div className="mt-4 flex flex-col">
         <p className="font-semibold text-lg text-white truncate">
-          <Link to={`/songs/${song?.key}`}>{song.title}</Link>
+          <Link to={`/songs/${song.id}`}>{song.attributes.name}</Link>
         </p>
         <p className="text-sm truncate text-gray-300 mt-1">
           <Link
             to={
-              song.artists
-                ? `/artists/${song?.artists[0]?.adamid}`
+              song.relationships.artists
+                ? `/artists/${song?.relationships.artists.data[0].id}`
                 : "/top-artists"
             }
           >
-            {song.subtitle}
+            {song.attributes.artistName}
           </Link>
         </p>
       </div>

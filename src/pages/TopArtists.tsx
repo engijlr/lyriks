@@ -1,9 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Loader, Error, ArtistCard } from "../components";
 import { useGetTopChartsQuery } from "../redux/services/shazamCore";
 
 const TopArtists = () => {
-  const { data, isFetching, error } = useGetTopChartsQuery();
+  const { country } = useSelector((state) => state.location);
+
+  const { data, isFetching, error } = useGetTopChartsQuery(country);
 
   if (isFetching) return <Loader text="Loading top artists" />;
 
@@ -17,7 +20,7 @@ const TopArtists = () => {
 
       <div className="flex flex-wrap sm:justify-start justify-center gap-8">
         {data?.map((track) => (
-          <ArtistCard key={track.key} track={track} />
+          <ArtistCard key={track.id} track={track} />
         ))}
       </div>
     </div>
