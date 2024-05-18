@@ -8,9 +8,9 @@ interface DetailsHeaderProps {
 }
 
 const DetailsHeader: React.FC<DetailsHeaderProps> = ({
+  songData,
   artistId,
   artistData,
-  songData,
 }) => {
   const artist = artistData?.attributes;
 
@@ -33,10 +33,10 @@ const DetailsHeader: React.FC<DetailsHeaderProps> = ({
 
         <div className="ml-5">
           <p className="font-bold sm:text-3xl text-xl text-white">
-            {artistId ? artist?.name : songData?.title}
+            {artistId ? artist?.name : songData?.name}
           </p>
           {!artistId && (
-            <Link to={`/artists/${songData?.artists[0].adamid}`}>
+            <Link to={`/artists/${songData?.relationships.artists.data[0].id}`}>
               <p className="text-base text-gray-400 mt-2">
                 {songData?.subtitle}
               </p>

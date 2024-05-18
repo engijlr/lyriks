@@ -13,19 +13,17 @@ const SongDetails = () => {
   const dispatch = useDispatch();
   const { songid } = useParams();
   const { activeSong, isPlaying } = useSelector((state) => state.player);
-  const { data: songData, isFetchingSongDetails } = useGetSongDetailsQuery({
+  const {
+    data: songData,
+    isFetchingSongDetails,
+    error,
+  } = useGetSongDetailsQuery({
     songid,
   });
-  /*const {
-    data,
-    isFetching: isFetchingRelatedSongs,
-    error,
-  } = useGetSongRelatedQuery({ songid });*/
 
-  /*if (isFetchingRelatedSongs || isFetchingSongDetails)
-    return <Loader title="Searching song details" />;*/
+  if (isFetchingSongDetails) return <Loader title="Searching song details" />;
 
-  /*if (error) return <Error message="Something went wrong" />;*/
+  if (error) return <Error message="Something went wrong" />;
 
   const handlePauseClick = () => {
     dispatch(playPause(false));
@@ -41,13 +39,18 @@ const SongDetails = () => {
       lyrics = songData?.resources.lyrics[key].attributes.text;
     }
   }
-  console.log(lyrics);
+
+  let songName;
+  for (let key in songData?.resources["shazam-songs"]) {
+    if (songData?.resources["shazam-songs"].hasOwnProperty(key)) {
+      songName = songData?.resources["shazam-songs"][key].attributes.title;
+    }
+  }
 
   return (
     <div className="flex flex-col">
-      <DetailsHeader artistId="" songData={songData} />
       <div className="mb-10">
-        <h2 className="text-white text-3xl font-bold">Lyrics:</h2>
+        <h2 className="text-white text-3xl font-bold">{songName}</h2>
         <div className="mt-5">
           {lyrics ? (
             lyrics.map((line, i) => (
@@ -62,14 +65,6 @@ const SongDetails = () => {
           )}
         </div>
       </div>
-
-      {/*<RelatedSongs
-        data={data}
-        isPlaying={isPlaying}
-        activeSong={activeSong}
-        handlePauseClick={handlePauseClick}
-        handlePlayClick={handlePlayClick}
-        />*/}
     </div>
   );
 };

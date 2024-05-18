@@ -48,13 +48,12 @@ const playerSlice = createSlice({
   reducers: {
     setActiveSong: (state, action) => {
       state.activeSong = action.payload.song;
+      console.log(action.payload?.song?.attributes.url);
 
-      if (action.payload?.data?.tracks?.hits) {
-        state.currentSongs = action.payload.data.tracks.hits;
-      } else if (action.payload?.data?.properties) {
-        state.currentSongs = action.payload?.data?.tracks;
+      if (action.payload?.song?.attributes.previews[0].url) {
+        state.currentSongs = action.payload.song?.attributes.url;
       } else {
-        state.currentSongs = action.payload.data;
+        state.currentSongs = action.payload.song;
       }
 
       state.currentIndex = action.payload.i;

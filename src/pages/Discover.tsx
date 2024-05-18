@@ -18,6 +18,7 @@ const Discover = () => {
     genre: genreListId || "POP",
     country: country || "NO",
   });
+  console.log(data);
 
   if (isFetching) return <Loader title="Loading songs..." />;
 
