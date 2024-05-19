@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { HiOutlineMenu } from "react-icons/hi";
 import { RiCloseLine } from "react-icons/ri";
@@ -6,7 +6,11 @@ import { RiCloseLine } from "react-icons/ri";
 import { logo } from "../assets";
 import { links } from "../assets/constants";
 
-const NavLinks = ({ handleClick }) => (
+interface NavLinksProps {
+  handleClick?: () => void;
+}
+
+const NavLinks: FC<NavLinksProps> = ({ handleClick }) => (
   <div className="mt-10">
     {links.map((link) => (
       <NavLink

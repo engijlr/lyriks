@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../redux/store";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper";
 
@@ -34,18 +34,18 @@ const TopChartCard: FC<TopChartCardPros> = ({
       <div className="flex-1 flex flex-row justify-between items-center">
         <img
           className="w-20 h-20 rounded-lg"
-          src={song.attributes.artwork.url}
-          alt={song?.attributes.name}
+          src={song?.attributes?.artwork?.url}
+          alt={song?.attributes?.name}
         />
         <div className="flex-1 flex flex-col justify-center mx-3">
           <Link to={`/songs/${song?.id}`}>
             <p className="text-xl font-bold text-white">
-              {song.attributes.name}
+              {song?.attributes?.name}
             </p>
           </Link>
-          <Link to={`/artists/${song?.relationships.artists.data[0].id}`}>
+          <Link to={`/artists/${song?.relationships?.artists?.data[0].id}`}>
             <p className="text-base text-gray-300 mt-1">
-              {song?.attributes.artistName}
+              {song?.attributes?.artistName}
             </p>
           </Link>
         </div>
@@ -61,15 +61,15 @@ const TopChartCard: FC<TopChartCardPros> = ({
   );
 };
 
-const TopPlay = () => {
-  const { country } = useSelector((state) => state.location);
-  const dispatch = useDispatch();
-  const { activeSong, isPlaying } = useSelector((state) => state.player);
+const TopPlay: FC = () => {
+  const { country } = useAppSelector((state) => state.location);
+  const dispatch = useAppDispatch();
+  const { activeSong, isPlaying } = useAppSelector((state) => state.player);
   const { data } = useGetTopChartsQuery(country || "NO");
-  const divRef = useRef(null);
+  const divRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    divRef.current.scrollIntoView({ behavior: "smooth" });
+    divRef.current?.scrollIntoView({ behavior: "smooth" });
   });
 
   const topPlays = data?.slice(0, 5);
@@ -130,14 +130,13 @@ const TopPlay = () => {
         >
           {topPlays?.map((song: Song, i: number) => (
             <SwiperSlide
-              //@ts-expect-error
               key={song?.id}
               style={{ width: "25%", height: "auto" }}
               className="shadow-lg rounded-full animate-sliderright"
             >
-              <Link to={`/artists/${song?.relationships.artists.data[0].id}`}>
+              <Link to={`/artists/${song?.relationships?.artists.data[0].id}`}>
                 <img
-                  src={song.attributes.artwork.url}
+                  src={song?.attributes?.artwork?.url}
                   alt="name"
                   className="rounded-full w-full object-cover"
                 />

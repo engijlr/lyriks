@@ -5,13 +5,13 @@ import PlayPause from "./PlayPause";
 import { Song } from "../redux/features/playerSlice";
 
 interface SongBarProps {
-  song: Song;
+  song?: Song;
   i: number;
-  artistId: string;
+  artistId?: string;
   isPlaying: boolean;
-  activeSong: Song;
-  handlePauseClick: () => void;
-  handlePlayClick: (song: Song, i: number) => void;
+  activeSong?: Song;
+  handlePauseClick?: () => void;
+  handlePlayClick?: (song: Song, i: number) => void;
 }
 
 const SongBar: FC<SongBarProps> = ({
@@ -35,7 +35,7 @@ const SongBar: FC<SongBarProps> = ({
         src={
           artistId
             ? song?.attributes?.artwork?.url
-                .replace("{w}", "125")
+                ?.replace("{w}", "125")
                 .replace("{h}", "125")
             : song?.images?.coverart
         }
@@ -43,7 +43,7 @@ const SongBar: FC<SongBarProps> = ({
       />
       <div className="flex-1 flex flex-col justify-center mx-3">
         {!artistId ? (
-          <Link to={`/songs/${song.key}`}>
+          <Link to={`/songs/${song?.id}`}>
             <p className="text-xl font-bold text-white">{song?.title}</p>
           </Link>
         ) : (

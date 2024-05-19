@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../redux/store";
 
 import PlayPause from "./PlayPause";
 import { Song, playPause, setActiveSong } from "../redux/features/playerSlice";
@@ -20,7 +20,7 @@ const SongCard: FC<SongCardProps> = ({
   i,
   data,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handlePauseClick = () => {
     dispatch(playPause(false));
@@ -29,7 +29,7 @@ const SongCard: FC<SongCardProps> = ({
     dispatch(setActiveSong({ song, data, i }));
     dispatch(playPause(true));
   };
-  console.log(song);
+
   return (
     <div className="flex flex-col w-[250px] p-4 bg-white/5 bg-opacity-80 backdrop-blur-sm animate-slideup rounded-lg cursor-pointer">
       <div className="relative w-full h-56 group">
@@ -50,14 +50,14 @@ const SongCard: FC<SongCardProps> = ({
         </div>
         <img
           alt="song_img"
-          src={song?.attributes?.artwork.url || song?.images.coverart}
+          src={song?.attributes?.artwork?.url || song?.images?.coverart}
         />
       </div>
 
       <div className="mt-4 flex flex-col">
         <p className="font-semibold text-lg text-white truncate">
           <Link to={`/songs/${song.id}`}>
-            {song?.title || song?.attributes.name}
+            {song?.title || song?.attributes?.name}
           </Link>
         </p>
         <p className="text-sm truncate text-gray-300 mt-1">
@@ -68,7 +68,7 @@ const SongCard: FC<SongCardProps> = ({
                 : "/top-artists"
             }
           >
-            {song?.subtitle || song?.attributes.artistName}
+            {song?.subtitle || song?.attributes?.artistName}
           </Link>
         </p>
       </div>

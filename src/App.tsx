@@ -1,5 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
+
+import { useAppSelector } from "./redux/store";
 import { Route, Routes } from "react-router-dom";
 
 import { Searchbar, Sidebar, MusicPlayer, TopPlay } from "./components";
@@ -15,7 +16,7 @@ import {
 import LocationContainer from "./components/LocationContainer";
 
 const App = () => {
-  const { activeSong } = useSelector((state) => state.player);
+  const { activeSong } = useAppSelector((state) => state.player);
 
   return (
     <LocationContainer>

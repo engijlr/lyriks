@@ -1,35 +1,36 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface Artist {
-  alias: string;
+interface Artist {
   id: string;
-  adamid: string;
 }
-
-export interface SongImages {
-  background: string;
-  coverart: string;
-  coverarthq: string;
-  joecolor: string;
-}
-
 export interface Song {
-  artists: Artist[];
-  images: SongImages;
-  key: string;
-  layout: string;
-  subtitle: string;
-  title: string;
-  type: string;
-  url: string;
+  id?: string;
+  attributes?: {
+    name?: string;
+    artistName?: string;
+    albumName: string;
+    artwork?: {
+      url?: string;
+    };
+  };
+  title?: string;
+  subtitle?: string;
+  images?: {
+    coverart?: string;
+  };
+  relationships?: {
+    artists: {
+      data: Artist[];
+    };
+  };
 }
 
 export interface PlayerState {
-  currentSongs: Song[];
+  currentSongs?: Song[];
   currentIndex: number;
   isActive: boolean;
   isPlaying: boolean;
-  activeSong: Song | null; // Assuming activeSong can be null if no song is active
+  activeSong?: Song;
   genreListId: string;
 }
 
