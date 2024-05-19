@@ -1,13 +1,10 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { DetailsHeader, Error, Loader, RelatedSongs } from "../components";
+import { Error, Loader } from "../components";
 
 import { setActiveSong, playPause } from "../redux/features/playerSlice";
-import {
-  useGetSongDetailsQuery,
-  useGetSongRelatedQuery,
-} from "../redux/services/shazamCore";
+import { useGetSongDetailsQuery } from "../redux/services/shazamCore";
 
 const SongDetails = () => {
   const dispatch = useDispatch();
@@ -24,14 +21,6 @@ const SongDetails = () => {
   if (isFetchingSongDetails) return <Loader title="Searching song details" />;
 
   if (error) return <Error message="Something went wrong" />;
-
-  const handlePauseClick = () => {
-    dispatch(playPause(false));
-  };
-  const handlePlayClick = (song, i) => {
-    dispatch(setActiveSong({ song, data, i }));
-    dispatch(playPause(true));
-  };
 
   let lyrics;
   for (let key in songData?.resources.lyrics) {
