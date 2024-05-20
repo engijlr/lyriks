@@ -5,14 +5,13 @@ import { Error, Loader } from "../components";
 
 import { setActiveSong, playPause } from "../redux/features/playerSlice";
 import { useGetSongDetailsQuery } from "../redux/services/shazamCore";
+import { useAppSelector } from "../redux/store";
 
 const SongDetails = () => {
-  const dispatch = useDispatch();
   const { songid } = useParams();
-  const { activeSong, isPlaying } = useSelector((state) => state.player);
   const {
     data: songData,
-    isFetchingSongDetails,
+    isFetching: isFetchingSongDetails,
     error,
   } = useGetSongDetailsQuery({
     songid,
@@ -42,7 +41,7 @@ const SongDetails = () => {
         <h2 className="text-white text-3xl font-bold">{songName}</h2>
         <div className="mt-5">
           {lyrics ? (
-            lyrics.map((line, i) => (
+            lyrics.map((line: string, i: number) => (
               <p className="text-gray-400 text-base my-1" key={i}>
                 {line}
               </p>

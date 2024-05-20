@@ -37,6 +37,7 @@ export interface Song {
       data: Artist[];
     };
   };
+  track?: {};
 }
 
 export interface PlayerState {

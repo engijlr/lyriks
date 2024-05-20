@@ -1,18 +1,19 @@
 import React from "react";
-import { useSelector } from "react-redux";
 
 import { Loader, Error, SongCard } from "../components";
 import { useGetTopChartsQuery } from "../redux/services/shazamCore";
+import { useAppSelector } from "../redux/store";
+import { Song } from "../redux/features/playerSlice";
 
 const TopCharts = () => {
-  const { activeSong, isPlaying } = useSelector((state) => state.player);
+  const { activeSong, isPlaying } = useAppSelector((state) => state.player);
 
-  const { country } = useSelector((state) => state.location);
-  const { data, isFetching, error } = useGetTopChartsQuery(country);
+  const { country } = useAppSelector((state) => state.location);
+  const { data, isFetching, error } = useGetTopChartsQuery(country!);
 
-  if (isFetching) return <Loader text="Loading top charts" />;
+  if (isFetching) return <Loader title="Loading top charts" />;
 
-  if (error) return <Error />;
+  if (error) return <Error message="Could not fetch Top Charts data." />;
 
   return (
     <div className="flex flex-col">
@@ -21,7 +22,7 @@ const TopCharts = () => {
       </h2>
 
       <div className="flex flex-wrap sm:justify-start justify-center gap-8">
-        {data?.map((song, i) => (
+        {data?.map((song: Song, i: number) => (
           <SongCard
             key={song.id}
             song={song}

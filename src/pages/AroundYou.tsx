@@ -3,16 +3,20 @@ import { useSelector } from "react-redux";
 
 import { Loader, Error, SongCard } from "../components";
 import { useGetSongsByCountryQuery } from "../redux/services/shazamCore";
+import { Song } from "../redux/features/playerSlice";
+import { useAppSelector } from "../redux/store";
 
 const AroundYou = () => {
-  const { activeSong, isPlaying } = useSelector((state) => state.player);
-  const { country } = useSelector((state) => state.location);
+  const { activeSong, isPlaying } = useAppSelector((state) => state.player);
+  const { country } = useAppSelector((state) => state.location);
 
-  const { data, isFetching, error } = useGetSongsByCountryQuery(country);
+  const { data, isFetching, error } = useGetSongsByCountryQuery(
+    country || "NO"
+  );
 
-  if (isFetching) return <Loader text="Loading songs around you" />;
+  if (isFetching) return <Loader title="Loading songs around you" />;
 
-  if (error) return <Error />;
+  if (error) return <Error message="Location field required" />;
 
   return (
     <div className="flex flex-col">
@@ -21,7 +25,7 @@ const AroundYou = () => {
       </h2>
 
       <div className="flex flex-wrap sm:justify-start justify-center gap-8">
-        {data?.map((song, i) => (
+        {data?.map((song: Song, i: number) => (
           <SongCard
             key={song.id}
             song={song}

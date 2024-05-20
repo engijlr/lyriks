@@ -6,15 +6,15 @@ interface GenreCountryQuery {
 }
 
 interface SongIdQuery {
-  songid: string;
+  songid?: string;
 }
 
 interface ArtistIdQuery {
-  artistId: string;
+  artistId?: string;
 }
 
 interface SearchTermQuery {
-  searchTerm: string;
+  searchTerm?: string;
 }
 
 export const shazamCoreApi = createApi({
@@ -44,7 +44,7 @@ export const shazamCoreApi = createApi({
       query: ({ songid }) => `/v2/tracks/similarities?track_id=${songid}`,
     }),
     getArtistDetails: builder.query<any, ArtistIdQuery>({
-      query: (artistId) => `/v2/artists/details?artist_id=${artistId}`,
+      query: ({ artistId }) => `/v2/artists/details?artist_id=${artistId}`,
     }),
     getSongsByCountry: builder.query<any, string>({
       query: (country) => `/v1/charts/country?country_code=${country}`,

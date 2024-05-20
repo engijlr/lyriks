@@ -1,28 +1,27 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 import { Error, Loader, SongCard } from "../components";
 import { genres } from "../assets/constants";
 
 import { useGetSongsByGenreQuery } from "../redux/services/shazamCore";
-import { selectGenreListId } from "../redux/features/playerSlice";
+import { Song, selectGenreListId } from "../redux/features/playerSlice";
+import { useAppDispatch, useAppSelector } from "../redux/store";
 
 const Discover = () => {
-  const dispatch = useDispatch();
-  const { activeSong, isPlaying, genreListId } = useSelector(
+  const dispatch = useAppDispatch();
+  const { activeSong, isPlaying, genreListId } = useAppSelector(
     (state) => state.player
   );
-  const { country } = useSelector((state) => state.location);
+  const { country } = useAppSelector((state) => state.location);
 
   const { data, isFetching, error } = useGetSongsByGenreQuery({
     genre: genreListId || "POP",
     country: country || "NO",
   });
-  console.log(data);
 
   if (isFetching) return <Loader title="Loading songs..." />;
 
-  if (error) return <Error message={error.message} />;
+  if (error) return <Error message="Server failed" />;
 
   const genreTitle = genres.find(({ value }) => value === genreListId)?.title;
 
@@ -46,7 +45,7 @@ const Discover = () => {
       </div>
 
       <div className="flex flex-wrap sm:justify-start justify-center gap-8">
-        {data?.map((song, i) => (
+        {data?.map((song: Song, i: number) => (
           <SongCard
             key={song.id}
             song={song}

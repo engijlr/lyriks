@@ -1,17 +1,17 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { Loader, Error, SongCard } from "../components";
 import { useGetSongsBySearchQuery } from "../redux/services/shazamCore";
+import { useAppSelector } from "../redux/store";
+import { Song } from "../redux/features/playerSlice";
 
 const Search = () => {
   const { searchTerm } = useParams();
-  const { activeSong, isPlaying } = useSelector((state) => state.player);
-  const { data, isFetching, error } = useGetSongsBySearchQuery(searchTerm);
+  const { activeSong, isPlaying } = useAppSelector((state) => state.player);
+  const { data, isFetching, error } = useGetSongsBySearchQuery({ searchTerm });
 
-  const songs = data?.tracks?.hits?.map((song) => {
-    console.log(song);
+  const songs = data?.tracks?.hits?.map((song: Song) => {
     return song.track;
   });
 
@@ -26,9 +26,9 @@ const Search = () => {
       </h2>
 
       <div className="flex flex-wrap sm:justify-start justify-center gap-8">
-        {songs?.map((song, i) => (
+        {songs?.map((song: Song, i: number) => (
           <SongCard
-            key={song.key}
+            key={song.id}
             song={song}
             isPlaying={isPlaying}
             activeSong={activeSong}
