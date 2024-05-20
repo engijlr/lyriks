@@ -1,7 +1,19 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React, { useRef, useEffect } from "react";
+import { Song } from "../../redux/features/playerSlice";
 
-const Player = ({
+interface PlayerProps {
+  activeSong?: Song;
+  isPlaying: boolean;
+  volume: number;
+  seekTime: number;
+  onEnded: () => void;
+  onTimeUpdate: (e: React.SyntheticEvent<HTMLAudioElement>) => void;
+  onLoadedData: (e: React.SyntheticEvent<HTMLAudioElement>) => void;
+  repeat: boolean;
+}
+
+const Player: React.FC<PlayerProps> = ({
   activeSong,
   isPlaying,
   volume,
@@ -11,7 +23,7 @@ const Player = ({
   onLoadedData,
   repeat,
 }) => {
-  const ref = useRef(null);
+  const ref = useRef<HTMLAudioElement>(null);
   // eslint-disable-next-line no-unused-expressions
   if (ref.current) {
     if (isPlaying) {
@@ -22,11 +34,11 @@ const Player = ({
   }
 
   useEffect(() => {
-    ref.current.volume = volume;
+    ref.current!.volume = volume;
   }, [volume]);
   // updates audio element only on seekTime change (and not on each rerender):
   useEffect(() => {
-    ref.current.currentTime = seekTime;
+    ref.current!.currentTime = seekTime;
   }, [seekTime]);
 
   return (

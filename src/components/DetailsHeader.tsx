@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Artist, Song } from "../redux/features/playerSlice";
 
 interface DetailsHeaderProps {
   artistId?: string;
-  artistData?: any;
-  songData?: any;
+  artistData?: Artist;
+  songData?: Song;
 }
 
 const DetailsHeader: React.FC<DetailsHeaderProps> = ({
@@ -36,7 +37,9 @@ const DetailsHeader: React.FC<DetailsHeaderProps> = ({
             {artistId ? artist?.name : songData?.name}
           </p>
           {!artistId && (
-            <Link to={`/artists/${songData?.relationships.artists.data[0].id}`}>
+            <Link
+              to={`/artists/${songData?.relationships?.artists.data[0].id}`}
+            >
               <p className="text-base text-gray-400 mt-2">
                 {songData?.subtitle}
               </p>

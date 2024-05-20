@@ -4,10 +4,10 @@ import { Song } from "../redux/features/playerSlice";
 
 interface PlayPauseProps {
   isPlaying: boolean;
-  activeSong: Song;
-  song: Song;
-  handlePause: () => void;
-  handlePlay: () => void;
+  activeSong?: Song;
+  song?: Song;
+  handlePause?: () => void;
+  handlePlay?: () => void;
 }
 
 const PlayPause: FC<PlayPauseProps> = ({
@@ -17,7 +17,7 @@ const PlayPause: FC<PlayPauseProps> = ({
   handlePause,
   handlePlay,
 }) =>
-  isPlaying && activeSong?.attributes.name === song?.attributes.name ? (
+  isPlaying && activeSong?.attributes?.name === song?.attributes?.name ? (
     <FaPauseCircle size={35} className="text-gray-300" onClick={handlePause} />
   ) : (
     <FaPlayCircle size={35} className="text-gray-300" onClick={handlePlay} />

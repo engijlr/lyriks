@@ -7,7 +7,19 @@ import {
   BsShuffle,
 } from "react-icons/bs";
 
-const Controls = ({
+interface ControlsProps {
+  isPlaying: boolean;
+  repeat: boolean;
+  setRepeat: React.Dispatch<React.SetStateAction<boolean>>;
+  shuffle: boolean;
+  setShuffle: React.Dispatch<React.SetStateAction<boolean>>;
+  currentSongs?: any[]; // Replace `any[]` with a specific type if possible
+  handlePlayPause: () => void;
+  handlePrevSong: () => void;
+  handleNextSong: () => void;
+}
+
+const Controls: React.FC<ControlsProps> = ({
   isPlaying,
   repeat,
   setRepeat,

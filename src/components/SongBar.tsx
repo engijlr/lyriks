@@ -56,13 +56,13 @@ const SongBar: FC<SongBarProps> = ({
         </p>
       </div>
     </div>
-    {!artistId ? (
+    {!artistId && song ? (
       <PlayPause
         isPlaying={isPlaying}
         activeSong={activeSong}
         song={song}
         handlePause={handlePauseClick}
-        handlePlay={() => handlePlayClick(song, i)}
+        handlePlay={() => handlePlayClick && handlePlayClick(song, i)}
       />
     ) : null}
   </div>

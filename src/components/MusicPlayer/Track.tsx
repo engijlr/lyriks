@@ -1,6 +1,13 @@
 import React from "react";
+import { Song } from "../../redux/features/playerSlice";
 
-const Track = ({ isPlaying, isActive, activeSong }) => (
+interface TrackProps {
+  isPlaying: boolean;
+  isActive: boolean;
+  activeSong?: Song;
+}
+
+const Track: React.FC<TrackProps> = ({ isPlaying, isActive, activeSong }) => (
   <div className="flex-1 flex items-center justify-start">
     <div
       className={`${
