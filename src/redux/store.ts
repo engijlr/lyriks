@@ -2,7 +2,7 @@ import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 
 import playerReducer from "./features/playerSlice";
 import locationReducer from "./features/locationSlice";
-import { shazamCoreApi } from "./services/shazamCore";
+import { shazamCoreApi } from "./services/shazanCore/shazamCore";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 export const store = configureStore({

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 
 import { Loader, Error, SongCard } from "../components";
-import { useGetSongsByCountryQuery } from "../redux/services/shazamCore";
-import { Song } from "../redux/features/playerSlice";
+import { useGetSongsByCountryQuery } from "../redux/services/shazanCore/shazamCore";
+
 import { useAppSelector } from "../redux/store";
+import { Song } from "../redux/services/shazanCore/types";
 
 const AroundYou = () => {
   const { activeSong, isPlaying } = useAppSelector((state) => state.player);

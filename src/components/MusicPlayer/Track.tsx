@@ -1,10 +1,10 @@
 import React from "react";
-import { Song } from "../../redux/features/playerSlice";
+import { Song } from "../../redux/services/shazanCore/types";
 
 interface TrackProps {
   isPlaying: boolean;
   isActive: boolean;
-  activeSong?: Song;
+  activeSong?: Song | null;
 }
 
 const Track: React.FC<TrackProps> = ({ isPlaying, isActive, activeSong }) => (

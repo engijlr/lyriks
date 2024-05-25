@@ -6,6 +6,7 @@ import {
   BsFillPlayFill,
   BsShuffle,
 } from "react-icons/bs";
+import { Song } from "../../redux/services/shazanCore/types";
 
 interface ControlsProps {
   isPlaying: boolean;
@@ -13,7 +14,7 @@ interface ControlsProps {
   setRepeat: React.Dispatch<React.SetStateAction<boolean>>;
   shuffle: boolean;
   setShuffle: React.Dispatch<React.SetStateAction<boolean>>;
-  currentSongs?: any[]; // Replace `any[]` with a specific type if possible
+  currentSongs?: Song[] | null;
   handlePlayPause: () => void;
   handlePrevSong: () => void;
   handleNextSong: () => void;

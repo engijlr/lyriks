@@ -25,7 +25,7 @@ interface LocationStateType {
   error?: string | null;
 }
 
-const initialState = {
+const initialState: LocationStateType = {
   country: null,
   status: "idle", // idle, loading, succeeded, failed
   error: null,

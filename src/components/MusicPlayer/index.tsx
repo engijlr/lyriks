@@ -24,7 +24,7 @@ const MusicPlayer = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (currentSongs.length) dispatch(playPause(true));
+    if (currentSongs?.length) dispatch(playPause(true));
   }, [currentIndex]);
 
   const handlePlayPause = () => {
@@ -40,17 +40,17 @@ const MusicPlayer = () => {
   const handleNextSong = () => {
     dispatch(playPause(false));
 
-    if (!shuffle) {
+    if (!shuffle && currentSongs) {
       dispatch(nextSong((currentIndex + 1) % currentSongs.length));
-    } else {
+    } else if (currentSongs) {
       dispatch(nextSong(Math.floor(Math.random() * currentSongs.length)));
     }
   };
 
   const handlePrevSong = () => {
-    if (currentIndex === 0) {
+    if (currentIndex === 0 && currentSongs) {
       dispatch(prevSong(currentSongs.length - 1));
-    } else if (shuffle) {
+    } else if (shuffle && currentSongs) {
       dispatch(prevSong(Math.floor(Math.random() * currentSongs.length)));
     } else {
       dispatch(prevSong(currentIndex - 1));
@@ -91,8 +91,12 @@ const MusicPlayer = () => {
           seekTime={seekTime}
           repeat={repeat}
           onEnded={handleNextSong}
-          onTimeUpdate={(event) => setAppTime(event.target.currentTime)}
-          onLoadedData={(event) => setDuration(event.target.duration)}
+          onTimeUpdate={(event) =>
+            setAppTime((event.target as HTMLMediaElement).currentTime)
+          }
+          onLoadedData={(event) =>
+            setDuration((event.target as HTMLMediaElement).duration)
+          }
         />
       </div>
       <VolumeBar

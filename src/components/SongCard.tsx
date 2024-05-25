@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import { useAppDispatch } from "../redux/store";
 
 import PlayPause from "./PlayPause";
-import { Song, playPause, setActiveSong } from "../redux/features/playerSlice";
+import { playPause, setActiveSong } from "../redux/features/playerSlice";
+import { Song } from "../redux/services/shazanCore/types";
 
 interface SongCardProps {
   song: Song;
   isPlaying: boolean;
-  activeSong: Song;
+  activeSong?: Song | null;
   i: number;
   data: any;
 }
@@ -26,7 +27,7 @@ const SongCard: FC<SongCardProps> = ({
     dispatch(playPause(false));
   };
   const handlePlayClick = () => {
-    dispatch(setActiveSong({ song, data, i }));
+    dispatch(setActiveSong({ song, i }));
     dispatch(playPause(true));
   };
 
@@ -64,7 +65,7 @@ const SongCard: FC<SongCardProps> = ({
           <Link
             to={
               song?.relationships?.artists
-                ? `/artists/${song?.relationships?.artists.data[0].id}`
+                ? `/artists/${song?.relationships?.artists.data?.[0].id}`
                 : "/top-artists"
             }
           >

@@ -3,9 +3,10 @@ import React from "react";
 import { Error, Loader, SongCard } from "../components";
 import { genres } from "../assets/constants";
 
-import { useGetSongsByGenreQuery } from "../redux/services/shazamCore";
-import { Song, selectGenreListId } from "../redux/features/playerSlice";
+import { useGetSongsByGenreQuery } from "../redux/services/shazanCore/shazamCore";
+import { selectGenreListId } from "../redux/features/playerSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store";
+import { Song } from "../redux/services/shazanCore/types";
 
 const Discover = () => {
   const dispatch = useAppDispatch();

@@ -1,84 +1,43 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-export interface Artist {
-  id: string;
-  attributes?: {
-    name?: string;
-    genreNames: string[];
-    artwork?: {
-      url: string;
-    };
-  };
-}
-export interface Song {
-  id?: string;
-  attributes?: {
-    name?: string;
-    artistName?: string;
-    albumName: string;
-    artwork?: {
-      url?: string;
-    };
-    previews: { url: string }[];
-  };
-  name?: string;
-  artistName?: string;
-  albumName?: string;
-  title?: string;
-  subtitle?: string;
-  images?: {
-    coverart?: string;
-  };
-  genres?: {
-    primary?: any;
-  };
-  relationships?: {
-    artists: {
-      data: Artist[];
-    };
-  };
-  track?: {};
-}
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { Song } from "../services/shazanCore/types";
 
 export interface PlayerState {
-  currentSongs?: Song[];
+  currentSongs?: Song[] | null;
   currentIndex: number;
   isActive: boolean;
   isPlaying: boolean;
-  activeSong?: Song;
+  activeSong?: Song | null;
   genreListId: string;
 }
 
-const initialState = {
-  currentSongs: [],
+const initialState: PlayerState = {
+  currentSongs: null,
   currentIndex: 0,
   isActive: false,
   isPlaying: false,
-  activeSong: {},
+  activeSong: null,
   genreListId: "",
 };
+
+interface SetActiveSongPayload {
+  song: Song;
+  i: number;
+}
 
 const playerSlice = createSlice({
   name: "player",
   initialState,
   reducers: {
-    setActiveSong: (state, action) => {
+    setActiveSong: (state, action: PayloadAction<SetActiveSongPayload>) => {
       state.activeSong = action.payload.song;
-
-      if (action.payload?.song?.attributes.previews[0].url) {
-        state.currentSongs = action.payload.song;
-      } else {
-        state.currentSongs = action.payload.song;
-      }
 
       state.currentIndex = action.payload.i;
       state.isActive = true;
     },
 
-    nextSong: (state, action) => {
-      if (state.currentSongs[action.payload]?.song) {
-        state.activeSong = state.currentSongs[action.payload]?.song;
-      } else {
+    nextSong: (state, action: PayloadAction<number>) => {
+      if (state?.currentSongs?.[action.payload]) {
         state.activeSong = state.currentSongs[action.payload];
       }
 
@@ -86,10 +45,8 @@ const playerSlice = createSlice({
       state.isActive = true;
     },
 
-    prevSong: (state, action) => {
-      if (state.currentSongs[action.payload]?.song) {
-        state.activeSong = state.currentSongs[action.payload]?.song;
-      } else {
+    prevSong: (state, action: PayloadAction<number>) => {
+      if (state.currentSongs?.[action.payload]) {
         state.activeSong = state.currentSongs[action.payload];
       }
 
@@ -97,11 +54,11 @@ const playerSlice = createSlice({
       state.isActive = true;
     },
 
-    playPause: (state, action) => {
+    playPause: (state, action: PayloadAction<boolean>) => {
       state.isPlaying = action.payload;
     },
 
-    selectGenreListId: (state, action) => {
+    selectGenreListId: (state, action: PayloadAction<string>) => {
       state.genreListId = action.payload;
     },
   },

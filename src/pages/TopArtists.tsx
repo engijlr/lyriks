@@ -1,8 +1,8 @@
 import React from "react";
 import { Loader, Error, ArtistCard } from "../components";
-import { useGetTopChartsQuery } from "../redux/services/shazamCore";
+import { useGetTopChartsQuery } from "../redux/services/shazanCore/shazamCore";
 import { useAppSelector } from "../redux/store";
-import { Song } from "../redux/features/playerSlice";
+import { Song } from "../redux/services/shazanCore/types";
 
 const TopArtists = () => {
   const { country } = useAppSelector((state) => state.location);

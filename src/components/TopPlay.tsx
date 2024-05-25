@@ -5,17 +5,18 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper";
 
 import PlayPause from "./PlayPause";
-import { Song, playPause, setActiveSong } from "../redux/features/playerSlice";
-import { useGetTopChartsQuery } from "../redux/services/shazamCore";
+import { playPause, setActiveSong } from "../redux/features/playerSlice";
+import { useGetTopChartsQuery } from "../redux/services/shazanCore/shazamCore";
 
 import "swiper/css";
 import "swiper/css/free-mode";
+import { Song } from "../redux/services/shazanCore/types";
 
 interface TopChartCardPros {
   song: Song;
   i: number;
   isPlaying: boolean;
-  activeSong: Song;
+  activeSong?: Song | null;
   handlePause: () => void;
   handlePlay: () => void;
 }
@@ -43,7 +44,7 @@ const TopChartCard: FC<TopChartCardPros> = ({
               {song?.attributes?.name}
             </p>
           </Link>
-          <Link to={`/artists/${song?.relationships?.artists?.data[0].id}`}>
+          <Link to={`/artists/${song?.relationships?.artists?.data?.[0].id}`}>
             <p className="text-base text-gray-300 mt-1">
               {song?.attributes?.artistName}
             </p>
@@ -79,7 +80,7 @@ const TopPlay: FC = () => {
     dispatch(playPause(false));
   };
   const handlePlayClick = (song: Song, i: number) => {
-    dispatch(setActiveSong({ song, data, i }));
+    dispatch(setActiveSong({ song, i }));
     dispatch(playPause(true));
   };
 
@@ -134,7 +135,9 @@ const TopPlay: FC = () => {
               style={{ width: "25%", height: "auto" }}
               className="shadow-lg rounded-full animate-sliderright"
             >
-              <Link to={`/artists/${song?.relationships?.artists.data[0].id}`}>
+              <Link
+                to={`/artists/${song?.relationships?.artists?.data?.[0].id}`}
+              >
                 <img
                   src={song?.attributes?.artwork?.url}
                   alt="name"

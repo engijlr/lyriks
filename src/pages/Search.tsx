@@ -2,12 +2,13 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 import { Loader, Error, SongCard } from "../components";
-import { useGetSongsBySearchQuery } from "../redux/services/shazamCore";
+import { useGetSongsBySearchQuery } from "../redux/services/shazanCore/shazamCore";
 import { useAppSelector } from "../redux/store";
-import { Song } from "../redux/features/playerSlice";
+import { Song } from "../redux/services/shazanCore/types";
 
 const Search = () => {
   const { searchTerm } = useParams();
+  console.log(searchTerm);
   const { activeSong, isPlaying } = useAppSelector((state) => state.player);
   const { data, isFetching, error } = useGetSongsBySearchQuery({ searchTerm });
 

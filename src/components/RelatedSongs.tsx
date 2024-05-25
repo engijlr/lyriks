@@ -1,12 +1,12 @@
 import React from "react";
 
 import SongBar from "./SongBar";
-import { Song } from "../redux/features/playerSlice";
+import { Song } from "../redux/services/shazanCore/types";
 
 interface RelatedSongsProps {
-  data: Song[];
+  data: Song[] | null;
   isPlaying: boolean;
-  activeSong?: Song;
+  activeSong?: Song | null;
   handlePauseClick?: () => void;
   handlePlayClick?: (song: Song, i: number) => void;
   artistId?: string;

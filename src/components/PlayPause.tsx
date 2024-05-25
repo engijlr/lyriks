@@ -1,11 +1,11 @@
 import React, { FC } from "react";
 import { FaPauseCircle, FaPlayCircle } from "react-icons/fa";
-import { Song } from "../redux/features/playerSlice";
+import { Song } from "../redux/services/shazanCore/types";
 
 interface PlayPauseProps {
   isPlaying: boolean;
-  activeSong?: Song;
-  song?: Song;
+  activeSong?: Song | null;
+  song?: Song | null;
   handlePause?: () => void;
   handlePlay?: () => void;
 }

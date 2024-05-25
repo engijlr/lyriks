@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Artist, Song } from "../redux/features/playerSlice";
+import { Artist, Song } from "../redux/services/shazanCore/types";
 
 interface DetailsHeaderProps {
   artistId?: string;
@@ -38,7 +38,7 @@ const DetailsHeader: React.FC<DetailsHeaderProps> = ({
           </p>
           {!artistId && (
             <Link
-              to={`/artists/${songData?.relationships?.artists.data[0].id}`}
+              to={`/artists/${songData?.relationships?.artists?.data?.[0].id}`}
             >
               <p className="text-base text-gray-400 mt-2">
                 {songData?.subtitle}

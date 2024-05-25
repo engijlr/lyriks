@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React, { useRef, useEffect } from "react";
-import { Song } from "../../redux/features/playerSlice";
+import { Song } from "../../redux/services/shazanCore/types";
 
 interface PlayerProps {
-  activeSong?: Song;
+  activeSong?: Song | null;
   isPlaying: boolean;
   volume: number;
   seekTime: number;
@@ -43,7 +43,7 @@ const Player: React.FC<PlayerProps> = ({
 
   return (
     <audio
-      src={activeSong?.attributes?.previews[0].url}
+      src={activeSong?.attributes?.previews?.[0].url}
       ref={ref}
       loop={repeat}
       onEnded={onEnded}

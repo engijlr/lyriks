@@ -2,14 +2,14 @@ import React, { FC } from "react";
 import { Link } from "react-router-dom";
 
 import PlayPause from "./PlayPause";
-import { Song } from "../redux/features/playerSlice";
+import { Song } from "../redux/services/shazanCore/types";
 
 interface SongBarProps {
-  song?: Song;
+  song?: Song | null;
   i: number;
   artistId?: string;
   isPlaying: boolean;
-  activeSong?: Song;
+  activeSong?: Song | null;
   handlePauseClick?: () => void;
   handlePlayClick?: (song: Song, i: number) => void;
 }
