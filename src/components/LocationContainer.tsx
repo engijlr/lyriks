@@ -9,6 +9,7 @@ interface LocationContainerProps {
 
 const LocationContainer: React.FC<LocationContainerProps> = ({ children }) => {
   const dispatch = useAppDispatch();
+  //@ts-expect-error
   dispatch(fetchUserLocation());
 
   return <>{children}</>;

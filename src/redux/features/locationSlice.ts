@@ -20,7 +20,7 @@ export const fetchUserLocation = createAsyncThunk(
 );
 
 interface LocationStateType {
-  country: string | null;
+  country?: string | null;
   status: string;
   error?: string | null;
 }

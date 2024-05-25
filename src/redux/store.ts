@@ -11,6 +11,7 @@ export const store = configureStore({
     player: playerReducer,
     location: locationReducer,
   },
+  //@ts-expect-error
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(shazamCoreApi.middleware),
 });
