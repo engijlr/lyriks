@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -7,14 +7,19 @@ export const fetchUserLocation = createAsyncThunk(
   "location/fetchUserLocation", // Action type prefix
   async () => {
     try {
-      const location = await axios.get(
+      const response = await axios.get(
         "https://geo.ipify.org/api/v2/country?apiKey=at_8lOSl404nKyzUDZSR1eYOyXjriALt"
       );
-
-      return location?.data?.location?.country;
+      return {
+        data: response.data,
+        error: null,
+      };
     } catch (error) {
       console.log(error);
-      return error;
+      return {
+        data: null,
+        error: error as AxiosError,
+      };
     }
   }
 );
@@ -41,8 +46,12 @@ const locationSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchUserLocation.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.country = action.payload;
+        if (action.payload.data) {
+          state.status = "succeeded";
+          state.country = action.payload.data?.location?.country;
+        }
+        state.status = "error";
+        state.error = action.payload.error?.message;
       })
       .addCase(fetchUserLocation.rejected, (state, action) => {
         state.status = "failed";

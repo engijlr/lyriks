@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { Error, Loader, SongCard } from "../components";
 import { genres } from "../assets/constants";
@@ -9,16 +9,30 @@ import { useAppDispatch, useAppSelector } from "../redux/store";
 import { Song } from "../redux/services/shazanCore/types";
 
 const Discover = () => {
+  const [trigger, setTrigger] = useState(false);
+
+  // Delay the trigger by 1.1 seconds due to API rate limits
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTrigger(true);
+    }, 1100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const dispatch = useAppDispatch();
   const { activeSong, isPlaying, genreListId } = useAppSelector(
     (state) => state.player
   );
   const { country } = useAppSelector((state) => state.location);
 
-  const { data, isFetching, error } = useGetSongsByGenreQuery({
-    genre: genreListId || "POP",
-    country: country || "NO",
-  });
+  const { data, isFetching, error } = useGetSongsByGenreQuery(
+    {
+      genre: genreListId || "POP",
+      country: country || "NO",
+    },
+    { skip: !trigger }
+  );
 
   if (isFetching) return <Loader title="Loading songs..." />;
 
