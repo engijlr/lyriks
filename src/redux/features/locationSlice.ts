@@ -31,7 +31,7 @@ interface LocationStateType {
 }
 
 const initialState: LocationStateType = {
-  country: null,
+  country: "DK",
   status: "idle", // idle, loading, succeeded, failed
   error: null,
 };
