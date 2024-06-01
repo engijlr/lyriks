@@ -45,6 +45,7 @@ const Sidebar = () => {
           />
         ) : (
           <HiOutlineMenu
+            data-testid="hamburger-menu"
             className="w-6 h-6 text-white mr-2"
             onClick={() => setMobileMenuOpen(true)}
           />
@@ -56,7 +57,12 @@ const Sidebar = () => {
           mobileMenuOpen ? "left-0" : "-left-full"
         }`}
       >
-        <img src={logo} alt="logo" className="w-full h-14 object-contain" />
+        <img
+          src={logo}
+          alt="logo"
+          className="w-full h-14 object-contain"
+          data-testid="logo-mobile"
+        />
         <NavLinks handleClick={() => setMobileMenuOpen(false)} />
       </div>
     </>
