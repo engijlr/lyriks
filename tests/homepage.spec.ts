@@ -11,3 +11,14 @@ test("logos render", async ({ page, viewport }) => {
     await expect(page.getByAltText("logo").first()).toBeVisible();
   }
 });
+
+test("Discover genre text", async ({ page }) => {
+  await page.goto("http://localhost:3000/");
+
+  await page.getByRole("combobox").click();
+
+  const optionValueToSelect = "Latin";
+  await page.getByRole("combobox").selectOption(optionValueToSelect);
+
+  page.getByRole("heading", { name: "Discover Latin" });
+});
