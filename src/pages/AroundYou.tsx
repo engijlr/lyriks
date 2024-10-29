@@ -5,18 +5,23 @@ import { useGetSongsByCountryQuery } from "../redux/services/shazanCore/shazamCo
 
 import { useAppSelector } from "../redux/store";
 import { Song } from "../redux/services/shazanCore/types";
+import { mockData } from "../constants";
 
 const AroundYou = () => {
   const { activeSong, isPlaying } = useAppSelector((state) => state.player);
   const { country } = useAppSelector((state) => state.location);
 
+  const useMockData = true;
+
   const { data, isFetching, error } = useGetSongsByCountryQuery(
     country || "NO"
   );
 
+  const songsData = useMockData ? mockData : data;
+
   if (isFetching) return <Loader title="Loading songs around you" />;
 
-  if (error) return <Error message="Location field required" />;
+  if (error && !useMockData) return <Error message="Location field required" />;
 
   return (
     <div className="flex flex-col">
@@ -25,7 +30,7 @@ const AroundYou = () => {
       </h2>
 
       <div className="flex flex-wrap sm:justify-start justify-center gap-8">
-        {data?.map((song: Song, i: number) => (
+        {songsData?.map((song: Song, i: number) => (
           <SongCard
             key={song.id}
             song={song}

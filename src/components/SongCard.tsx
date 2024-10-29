@@ -50,6 +50,7 @@ const SongCard: FC<SongCardProps> = ({
           />
         </div>
         <img
+          className="h-full"
           alt="song_img"
           src={song?.attributes?.artwork?.url || song?.images?.coverart}
         />

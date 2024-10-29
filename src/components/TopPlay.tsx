@@ -11,6 +11,7 @@ import { useGetTopChartsQuery } from "../redux/services/shazanCore/shazamCore";
 import "swiper/css";
 import "swiper/css/free-mode";
 import { Song } from "../redux/services/shazanCore/types";
+import { mockData } from "../constants";
 
 interface TopChartCardPros {
   song: Song;
@@ -67,13 +68,14 @@ const TopPlay: FC = () => {
   const dispatch = useAppDispatch();
   const { activeSong, isPlaying } = useAppSelector((state) => state.player);
   const { data } = useGetTopChartsQuery(country || "NO");
+
   const divRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     divRef.current?.scrollIntoView({ behavior: "smooth" });
   });
 
-  const topPlays = data?.slice(0, 5);
+  const topPlays = data?.slice(0, 5) || mockData.slice(0, 5);
 
   const handlePauseClick = () => {
     dispatch(playPause(false));
@@ -131,7 +133,7 @@ const TopPlay: FC = () => {
           {topPlays?.map((song: Song, i: number) => (
             <SwiperSlide
               key={song?.id}
-              style={{ width: "25%", height: "auto" }}
+              style={{ width: "20%", height: "100%" }}
               className="shadow-lg rounded-full animate-sliderright"
             >
               <Link
