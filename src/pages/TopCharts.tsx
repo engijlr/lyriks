@@ -4,16 +4,23 @@ import { Loader, Error, SongCard } from "../components";
 import { useGetTopChartsQuery } from "../redux/services/shazanCore/shazamCore";
 import { useAppSelector } from "../redux/store";
 import { Song } from "../redux/services/shazanCore/types";
+import { mockData } from "../constants";
 
 const TopCharts = () => {
   const { activeSong, isPlaying } = useAppSelector((state) => state.player);
 
   const { country } = useAppSelector((state) => state.location);
+
+  const useMockData = true;
+
   const { data, isFetching, error } = useGetTopChartsQuery(country!);
+
+  const songsData = useMockData ? mockData : data;
 
   if (isFetching) return <Loader title="Loading top charts" />;
 
-  if (error) return <Error message="Could not fetch Top Charts data." />;
+  if (error && !useMockData)
+    return <Error message="Could not fetch Top Charts data." />;
 
   return (
     <div className="flex flex-col">
@@ -22,7 +29,7 @@ const TopCharts = () => {
       </h2>
 
       <div className="flex flex-wrap sm:justify-start justify-center gap-8">
-        {data?.map((song: Song, i: number) => (
+        {songsData?.map((song: Song, i: number) => (
           <SongCard
             key={song.id}
             song={song}

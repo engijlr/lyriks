@@ -7,6 +7,7 @@ import { useGetSongsByGenreQuery } from "../redux/services/shazanCore/shazamCore
 import { selectGenreListId } from "../redux/features/playerSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import { Song } from "../redux/services/shazanCore/types";
+import { mockData } from "../constants";
 
 const Discover = () => {
   const [trigger, setTrigger] = useState(false);
@@ -36,7 +37,7 @@ const Discover = () => {
 
   if (isFetching) return <Loader title="Loading songs..." />;
 
-  if (error) return <Error message="Server failed" />;
+  const songsData = error ? mockData : data;
 
   const genreTitle = genres.find(({ value }) => value === genreListId)?.title;
 
@@ -60,7 +61,7 @@ const Discover = () => {
       </div>
 
       <div className="flex flex-wrap sm:justify-start justify-center gap-8">
-        {data?.map((song: Song, i: number) => (
+        {songsData?.map((song: Song, i: number) => (
           <SongCard
             key={song.id}
             song={song}
